@@ -1,0 +1,5 @@
+{
+  "name": "stm32_crc",
+  "description": "STM32F CRC driver",
+  "provider": "core"
+}

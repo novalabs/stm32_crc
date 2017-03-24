@@ -22,24 +22,10 @@ static CRC_TypeDef* _CRC = ((CRC_TypeDef*)CRC_BASE);
 
 namespace core {
 namespace stm32_crc {
-core::os::Mutex CRC::_lock;
-
-void
-CRC::lock()
-{
-    _lock.acquire();
-}
-
-void
-CRC::unlock()
-{
-    _lock.release();
-}
 
 void
 CRC::init()
 {
-    _lock.initialize();
 #if defined(STM32F303xx)
     rccEnableAHB(RCC_AHBENR_CRCEN, FALSE);
 #elif defined(STM32F091xC)

@@ -8,7 +8,6 @@
 
 #include <cstddef>
 #include <stdint.h>
-#include <core/os/Mutex.hpp>
 
 #undef CRC
 
@@ -66,18 +65,6 @@ public:
     getCRC(
         void
     );
-
-    static
-    void
-    lock();
-
-    static
-    void
-    unlock();
-
-
-private:
-    static core::os::Mutex _lock;
 };
 }
 }

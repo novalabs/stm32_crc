@@ -5,6 +5,9 @@
  */
 
 #include "hal.h"
+
+#include <assert.h>
+
 #include <core/stm32_crc/CRC.hpp>
 
 #if defined(STM32F303xx)
@@ -22,7 +25,6 @@ static CRC_TypeDef* _CRC = ((CRC_TypeDef*)CRC_BASE);
 
 namespace core {
 namespace stm32_crc {
-
 void
 CRC::init()
 {
@@ -59,12 +61,12 @@ CRC::reset()
     _CRC->CR |= CRC_CR_RESET;
 }
 
-#if defined(STM32F303xx) || defined(STM32F091xC)
 void
 CRC::setPolynomialSize(
     PolynomialSize size
 )
 {
+#if defined(STM32F303xx) || defined(STM32F091xC)
     uint32_t tmpcr = 0;
 
 /* Get CR register value */
@@ -91,8 +93,10 @@ CRC::setPolynomialSize(
 
 /* Write to CR register */
     _CRC->CR = (uint32_t)tmpcr;
-} // CRC::setPolynomialSize
+#elif defined(STM32F407xx)
+    assert(size == PolynomialSize::POLY_32);
 #endif // if defined(STM32F303xx) || defined(STM32F091xC)
+} // CRC::setPolynomialSize
 
 uint32_t
 CRC::CRC32(

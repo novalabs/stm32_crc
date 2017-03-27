@@ -23,7 +23,6 @@ public:
     reset();
 
 
-#if defined(STM32F303xx) || defined(STM32F091xC)
     enum class PolynomialSize {
         POLY_7,
         POLY_8,
@@ -35,7 +34,6 @@ public:
     setPolynomialSize(
         PolynomialSize size
     );
-#endif
 
     static uint32_t
     CRC32(

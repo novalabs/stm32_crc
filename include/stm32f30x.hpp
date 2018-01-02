@@ -1,8 +1,7 @@
-/*
- * stm32f30x.hpp
+/* COPYRIGHT (c) 2016-2018 Nova Labs SRL
  *
- *  Created on: 9 May 2016
- *      Author: davide
+ * All rights reserved. All use of this software and documentation is
+ * subject to the License Agreement located in the file LICENSE.
  */
 
 #pragma once

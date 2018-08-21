@@ -16,7 +16,7 @@ static CRC_TypeDef* _CRC = ((CRC_TypeDef*)CRC_BASE);
 #elif defined(STM32F091xC)
   #include <core/stm32_crc/stm32f0xx.hpp>
 static CRC_TypeDef* _CRC = ((CRC_TypeDef*)CRC_BASE);
-#elif defined(STM32F407xx)
+#elif defined(STM32F407xx) || defined(STM32F417xx)
   #include <core/stm32_crc/stm32f4xx.hpp>
 static CRC_TypeDef* _CRC = ((CRC_TypeDef*)CRC_BASE);
 #else
@@ -32,8 +32,10 @@ CRC::init()
     rccEnableAHB(RCC_AHBENR_CRCEN, FALSE);
 #elif defined(STM32F091xC)
     rccEnableAHB(RCC_AHBENR_CRCEN, FALSE);
-#elif defined(STM32F407xx)
+#elif defined(STM32F407xx) || defined(STM32F417xx)
     rccEnableAHB1(RCC_AHB1ENR_CRCEN, FALSE);
+#else
+  #error "Chip not supported"
 #endif
 
 #if defined(STM32F303xx) || defined(STM32F091xC)
@@ -47,11 +49,13 @@ CRC::init()
     _CRC->INIT = 0xFFFFFFFF;
     /* Reset the CRC calculation unit */
     _CRC->CR = CRC_CR_RESET;
-#elif defined(STM32F407xx)
+#elif defined(STM32F407xx) || defined(STM32F417xx)
     /* Reset IDR register */
     _CRC->IDR = 0x00;
     /* Reset the CRC calculation unit */
     _CRC->CR = CRC_CR_RESET;
+#else
+  #error "Chip not supported"
 #endif
 } // CRC::init
 
@@ -93,9 +97,11 @@ CRC::setPolynomialSize(
 
 /* Write to CR register */
     _CRC->CR = (uint32_t)tmpcr;
-#elif defined(STM32F407xx)
+#elif defined(STM32F407xx) || defined(STM32F417xx)
     assert(size == PolynomialSize::POLY_32);
-#endif // if defined(STM32F303xx) || defined(STM32F091xC)
+#else
+  #error "Chip not supported"
+#endif
 } // CRC::setPolynomialSize
 
 uint32_t
